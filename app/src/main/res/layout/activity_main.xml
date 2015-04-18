@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp"
+                tools:context="frezc.lanothello.app.MainActivity">
+
+    <EditText
+            android:id="@+id/et_name"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:hint="Input your name (10)"/>
+    <Button android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Start Server" android:id="@+id/btn_server"/>
+    <Button android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Start Searcher" android:id="@+id/btn_searcher"/>
+    <EditText android:id="@+id/et_ipaddress"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:hint="ip address" android:layout_marginTop="50dp"/>
+    <Button android:id="@+id/btn_dc"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Direct Connect"/>
+
+    <Button android:id="@+id/btn_local"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Local Play" android:layout_marginTop="50dp"/>
+</LinearLayout>
