@@ -5,6 +5,8 @@ import android.os.PersistableBundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.RelativeLayout;
+import frezc.lanothello.app.game.Othello;
+import frezc.lanothello.app.game.Player;
 
 /**
  * Created by freeze on 2015/4/18.
@@ -14,6 +16,8 @@ public class LocalPlayActivity extends ActionBarActivity {
     private OthelloView othelloView;
 
     private int playerNO = 0;
+    private Player[] players = new Player[2];
+    private Othello othello = new Othello();
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
@@ -26,5 +30,10 @@ public class LocalPlayActivity extends ActionBarActivity {
 
         chessboard.setVisibility(View.VISIBLE);
         layoutLoading.setVisibility(View.GONE);
+
+        players[Othello.PLAYERONE].playOthello(othello);
+        players[Othello.PLAYERTWO].playOthello(othello);
+
+        othello.startNewGame();
     }
 }

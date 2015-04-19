@@ -1,5 +1,7 @@
 package frezc.lanothello.app.game;
 
+import frezc.lanothello.app.OthelloView;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +16,9 @@ public class Othello implements Chess{
     private int nowPlayerNO = 0;
     private int playerNumber = 0;
     private List<Location> flipPieces;
-    private OnFlipListener onFlipListener;
+    private OnFlipListener onFlipListener = null;
+
+    private boolean gameStarted = false;
 
     public static final Dir DIR_LEFTUP = new Dir(-1,-1);
     public static final Dir DIR_UP = new Dir(0,-1);
@@ -63,7 +67,6 @@ public class Othello implements Chess{
         players = new Player[2];
         playersPieces = new int[2];
         flipPieces = new ArrayList<Location>(32);
-        startNewGame();
     }
 
     public int getMaxPlayers(){
@@ -82,14 +85,16 @@ public class Othello implements Chess{
         playersPieces[0] = 2;
         playersPieces[1] = 2;
         nowPlayerNO = 0;
+        gameStarted = true;
     }
 
     public boolean putPiece(int x, int y, int playerNO){
-        if(this.nowPlayerNO == playerNO){
+        if(this.nowPlayerNO == playerNO && gameStarted){
             List dirs = checkAvailable(x,y,playerNO);
             if(dirs.isEmpty()){
                 return false;
             }else {
+                chessboard[x][y] = playerNO;
                 flipPieces.clear();
                 for(int i=0; i<dirs.size(); i++){
                     Dir dir = (Dir) dirs.get(i);
@@ -97,11 +102,16 @@ public class Othello implements Chess{
                     int oy = y + dir.yoffset;
                     while(chessboard[ox][oy] != playerNO){
                         flipPieces.add(new Location(ox,oy));
+                        chessboard[ox][oy] = flip(chessboard[ox][oy]);
+                        ox += dir.xoffset;
+                        oy += dir.yoffset;
                     }
                 }
-                onFlipListener.onFlip(flipPieces);
+                if(onFlipListener != null){
+                    onFlipListener.onFlip(flipPieces);
+                }
                 playersPieces[playerNO] += flipPieces.size()+1;
-                playerNO = playerNO == PLAYERONE ? PLAYERTWO : PLAYERONE;
+                this.nowPlayerNO = playerNO == PLAYERONE ? PLAYERTWO : PLAYERONE;
                 playersPieces[playerNO] -= flipPieces.size();
                 return true;
             }
@@ -112,12 +122,16 @@ public class Othello implements Chess{
 
     @Override
     public boolean isGameOver() {
-        return false;
+        if(playersPieces[0]+playersPieces[1] >= 64){
+            return true;
+        }else {
+            return false;
+        }
     }
 
     @Override
     public int getResult() {
-        return 0;
+        return playersPieces[PLAYERONE]>playersPieces[PLAYERTWO] ? PLAYERONE:PLAYERTWO;
     }
 
     @Override
@@ -131,7 +145,7 @@ public class Othello implements Chess{
     }
 
     private List checkAvailable(int x, int y, int playerNO) {
-        List<Dir> dirs = new ArrayList<Dir>(8);
+        List<Dir> dirs = new ArrayList<>(8);
         if(chessboard[x][y] == -1){
             for(int i=0; i<9; i++){
                 addAvailableDir(dirs, x, y, SAMPLE_DIRS[i], playerNO);
@@ -176,5 +190,9 @@ public class Othello implements Chess{
             }
         }
         return false;
+    }
+
+    private int flip(int now){
+        return now == 0 ? 1 : 0;
     }
 }

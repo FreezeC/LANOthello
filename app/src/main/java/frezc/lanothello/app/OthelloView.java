@@ -56,6 +56,7 @@ public class OthelloView extends View implements View.OnTouchListener{
         Bitmap bitmap = Bitmap.createBitmap(width,width, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         Paint paint = new Paint();
+        canvas.drawColor(0xffF7EED6);
         paint.setColor(Color.BLACK);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(strokeWidth);
