@@ -1,7 +1,5 @@
 package frezc.lanothello.app.game;
 
-import frezc.lanothello.app.OthelloView;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -194,5 +192,10 @@ public class Othello implements Chess{
 
     private int flip(int now){
         return now == 0 ? 1 : 0;
+    }
+
+    @Override
+    public int[][] getChessboard() {
+        return chessboard;
     }
 }

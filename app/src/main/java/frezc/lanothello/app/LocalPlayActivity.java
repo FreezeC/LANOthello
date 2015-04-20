@@ -31,6 +31,8 @@ public class LocalPlayActivity extends ActionBarActivity {
         chessboard.setVisibility(View.VISIBLE);
         layoutLoading.setVisibility(View.GONE);
 
+        players[0] = new Player();
+        players[1] = new Player();
         players[Othello.PLAYERONE].playOthello(othello);
         players[Othello.PLAYERTWO].playOthello(othello);
 

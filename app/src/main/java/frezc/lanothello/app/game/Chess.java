@@ -11,4 +11,5 @@ public interface Chess {
     boolean isGameOver();
     int getResult();
     int addPlayer(Player player);
+    int[][] getChessboard();
 }

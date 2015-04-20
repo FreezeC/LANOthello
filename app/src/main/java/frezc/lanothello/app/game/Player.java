@@ -16,4 +16,15 @@ public class Player {
         playerNO = othello.addPlayer(this);
         return playerNO != Chess.FULL_PLAYER;
     }
+
+    public Chess getOthello() {
+        return othello;
+    }
+
+    public int getPlayerNO() {
+        if(othello == null){
+            return -1;
+        }
+        return playerNO;
+    }
 }
