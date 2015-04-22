@@ -112,7 +112,8 @@ public class MainActivity extends ActionBarActivity
                 }).start();
                 break;
             case R.id.btn_local:
-
+                Intent intentl = new Intent(this, LocalPlayActivity.class);
+                startActivity(intentl);
                 break;
         }
     }

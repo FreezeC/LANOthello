@@ -5,6 +5,7 @@ import android.os.PersistableBundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 import frezc.lanothello.app.game.Othello;
 import frezc.lanothello.app.game.Player;
 
@@ -29,12 +30,17 @@ public class LocalPlayActivity extends ActionBarActivity {
         layoutLoading = (RelativeLayout) findViewById(R.id.layout_loading);
 
         chessboard.setVisibility(View.VISIBLE);
+        othelloView.setVisibility(View.VISIBLE);
         layoutLoading.setVisibility(View.GONE);
 
         players[0] = new Player();
         players[1] = new Player();
-        players[Othello.PLAYERONE].playOthello(othello);
-        players[Othello.PLAYERTWO].playOthello(othello);
+        if(!players[Othello.PLAYERONE].playOthello(othello)){
+            Toast.makeText(this, "Full Player?", Toast.LENGTH_SHORT).show();
+        }
+        if(!players[Othello.PLAYERTWO].playOthello(othello)){
+            Toast.makeText(this, "Full Player?", Toast.LENGTH_SHORT).show();
+        }
 
         othello.startNewGame();
     }

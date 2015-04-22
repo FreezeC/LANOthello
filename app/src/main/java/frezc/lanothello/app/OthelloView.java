@@ -11,7 +11,6 @@ import android.widget.Toast;
 import frezc.lanothello.app.game.Othello;
 import frezc.lanothello.app.game.Player;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,6 +27,10 @@ public class OthelloView extends View implements View.OnTouchListener, Othello.O
 
     private Handler handler;
 
+    public interface OnPutCompleteListener{
+        void onPutComplete();
+    }
+
     /**
      * flip animation here
      * @param flipPieces
@@ -35,8 +38,10 @@ public class OthelloView extends View implements View.OnTouchListener, Othello.O
     @Override
     public void onFlip(List<Othello.Location> flipPieces) {
         for(Othello.Location loc : flipPieces) {
+            pieceViews[loc.x][loc.y].flip();
             Log.i("test", "flip piece location: " + loc.x + "," + loc.y + " ");
         }
+        invalidate();
     }
 
     public OthelloView(Context context) {
@@ -102,6 +107,7 @@ public class OthelloView extends View implements View.OnTouchListener, Othello.O
                     }
                 }
             }
+            invalidate();
         }
     }
 
@@ -135,6 +141,7 @@ public class OthelloView extends View implements View.OnTouchListener, Othello.O
                 setPiece((int) (location.y * (cellWidth+strokeWidth)+strokeWidth),
                         (int) (location.x * (cellWidth+strokeWidth)+strokeWidth),
                         player.getPlayerNO());
+                invalidate();
                 Toast.makeText(getContext(),"opponent turn!",Toast.LENGTH_SHORT).show();
             }
         }

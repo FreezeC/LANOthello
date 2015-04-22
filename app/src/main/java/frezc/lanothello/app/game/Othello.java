@@ -109,13 +109,17 @@ public class Othello implements Chess{
                     onFlipListener.onFlip(flipPieces);
                 }
                 playersPieces[playerNO] += flipPieces.size()+1;
-                this.nowPlayerNO = playerNO == PLAYERONE ? PLAYERTWO : PLAYERONE;
+                this.nowPlayerNO = nextPlayer(playerNO);
                 playersPieces[playerNO] -= flipPieces.size();
                 return true;
             }
         }else {
             return false;
         }
+    }
+
+    private int nextPlayer(int playerNO) {
+        return (playerNO+1)%2;
     }
 
     @Override
@@ -143,7 +147,7 @@ public class Othello implements Chess{
     }
 
     private List checkAvailable(int x, int y, int playerNO) {
-        List<Dir> dirs = new ArrayList<>(8);
+        List<Dir> dirs = new ArrayList<Dir>(8);
         if(chessboard[x][y] == -1){
             for(int i=0; i<9; i++){
                 addAvailableDir(dirs, x, y, SAMPLE_DIRS[i], playerNO);
